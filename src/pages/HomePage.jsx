@@ -1,4 +1,6 @@
+
 import React, { useEffect, useState } from 'react';
+import NavBar from '../components/NavBar';
 
 const HomePage = () => {
   const [projects, setProjects] = useState([]);
@@ -17,7 +19,6 @@ const HomePage = () => {
         setProjects(data);
         setLoading(false);
 
-        
         console.log('Fetched Data:', data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -30,6 +31,7 @@ const HomePage = () => {
 
   return (
     <div>
+      <NavBar />
       {loading ? (
         <p>Loading...</p>
       ) : (
@@ -42,7 +44,6 @@ const HomePage = () => {
                 <h2 className="text-xl font-bold mb-2">{item.project.title}</h2>
                 <p className="text-gray-600 mb-4">{item.project.tagline}</p>
                 <img src={item.project.header_image} alt={item.project.title} className="w-full h-40 object-cover mb-4" />
-                <p className="text-gray-800">{item.project.description}</p>
                 <p className="text-blue-500 mt-4">{item.project.author}</p>
               </div>
             ))}
@@ -51,7 +52,6 @@ const HomePage = () => {
       )}
     </div>
   );
-  
 };
 
 export default HomePage;
