@@ -18,7 +18,7 @@ const HomePage = () => {
   
         const data = await response.json();
         setProjects(data);
-        setTotalPages(data.meta.total_pages); // Use data.meta.total_pages here
+        setTotalPages(data.meta.total_pages); 
         setLoading(false);
   
         console.log('Fetched Data:', data);
@@ -31,19 +31,13 @@ const HomePage = () => {
     fetchData();
   }, [currentPage]);
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-      console.log('Next Page Clicked. New Page:', currentPage + 1);
-    }
-  };
-  
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-      console.log('Previous Page Clicked. New Page:', currentPage - 1);
-    }
-  };
+ const handleNextPage = () => {
+  console.log('Test', currentPage + 1);
+};
+
+const handlePrevPage = () => {
+  console.log('Test', currentPage - 1);
+};
 
   return (
     <div>
@@ -68,14 +62,14 @@ const HomePage = () => {
             disabled={currentPage === 1}
             className={`bg-gray-500 text-white py-2 px-4 rounded ${currentPage === 1 ? 'cursor-not-allowed' : 'cursor-pointer'}`}
           >
-            Previous Page
+            Vorige Pagina
           </button>
           <button
             onClick={handleNextPage}
             disabled={currentPage === totalPages}
             className={`bg-blue-500 text-white py-2 px-4 rounded ${currentPage === totalPages ? 'cursor-not-allowed' : 'cursor-pointer'}`}
           >
-            Next Page
+            Volgende pagina
           </button>
           </div>
         </div>
