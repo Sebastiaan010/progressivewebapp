@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import NavBar from '../components/NavBar';
+import { Link } from 'react-router-dom';
 
 const HomePage = () => {
   const [projects, setProjects] = useState([]);
@@ -32,10 +33,12 @@ const HomePage = () => {
   }, [currentPage]);
 
  const handleNextPage = () => {
+  setCurrentPage((prevPage) => prevPage + 1);
   console.log('Test', currentPage + 1);
 };
 
 const handlePrevPage = () => {
+  setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
   console.log('Test', currentPage - 1);
 };
 
@@ -48,11 +51,15 @@ const handlePrevPage = () => {
         <div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {projects.data.map((item) => (
-              <div key={item.project.id} className="bg-white p-6 rounded-lg shadow-md">
+              <div key={item.project.id} className="bg-white p-6 rounded-lg shadow-md relative">
                 <h2 className="text-xl font-bold mb-2">{item.project.title}</h2>
                 <p className="text-gray-600 mb-4">{item.project.tagline}</p>
                 <img src={item.project.header_image} alt={item.project.title} className="w-full h-40 object-cover mb-4" />
                 <p className="text-blue-500 mt-4">{item.project.author}</p>
+                <Link to={`/details/${item.project.id}`}></Link>
+                <button className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Details
+                </button>
               </div>
             ))}
           </div>
