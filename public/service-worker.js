@@ -7,21 +7,32 @@ const cacheFiles = [
     'src/index.css',
 ];
 
-
 self.addEventListener('install', (event) => {
-  // Voeg caching strategieën toe tijdens de installatie
+  event.waitUntil(
+    caches.open(cacheName).then((cache) => {
+      return cache.addAll(cacheFiles);
+    })
+  );
 });
 
 self.addEventListener('fetch', (event) => {
-  // Implementeer caching strategieën tijdens fetch events
+  event.respondWith(
+    caches.match(event.request).then((cachedResponse) => {
+      return cachedResponse || fetch(event.request).then((response) => {
+        // Cache the fetched response for future use
+        caches.open(cacheName).then((cache) => {
+          cache.put(event.request, response.clone());
+        });
+        return response;
+      });
+    })
+  );
 });
 
 function saveToIndexedDB(key, value) {
-  // Gebruik LocalForage om gegevens op te slaan in IndexedDB
-  localforage.setItem(key, value);
+  return localforage.setItem(key, value);
 }
 
 function getFromIndexedDB(key) {
-  // Gebruik LocalForage om gegevens op te halen uit IndexedDB
   return localforage.getItem(key);
 }
